@@ -1,0 +1,1 @@
+<img src="/assets/VoidwyrmIco.png" width="50" height="50"></img>

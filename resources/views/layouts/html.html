@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>{{ store.name }} | {{ __(page.title) }}</title>
+
+    <!--<link href="/templates/209/css/style.min.css" rel="stylesheet">-->
+    <link href="https://voidwyrmapi.com/css/app.css" rel="stylesheet">
+   
+    <link rel="shortcut icon" href="{{ store.favicon }}">
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        
+        _gaq.push(['_setAccount', 'UA-36735942-3']);
+        _gaq.push(['_trackPageview']);
+        
+        {% if store.googleAnalytics %}
+            _gaq.push(['b._setAccount', '{{ store.googleAnalytics }}']);
+            _gaq.push(['b._trackPageview']);
+        {% endif %}
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+  </head>
+  <body class="bg-gray-900" style="background: url(https://bloody-ark.com/assets/images/navbar.png) rgb(31, 33, 39);">
+ <nav class="bg-gray-800 fixed w-full z-50" style="background-color: #161616;">
+         <div class="mx-auto flex h-20 w-full justify-between px-4">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+               <img src="https://beta.bloody-ark.com/logo.png" class="h-14 sm:h-14">
+               <p class="text-gray-100 text-2xl ml-3 font-semibold">Bloody Survival</p>
+</a>
+            </div>
+            <div class="flex items-center">
+               <button class="hidden lg:block px-4 text-white {% if page.category == "index" %}text-red-600 text-semibold{% endif %}">Home</button>
+               {% for category in store.categories %}
+                    <a href="" class="hidden lg:block px-4 text-white">{{ category.name }}</a>
+               {% endfor %}
+               <!--<a href="https://discord.gg/5p5fKTQ9gN" class="hidden lg:block px-4 text-white">Discord</a>-->
+               <hr class="w-px h-6 bg-gray-600 border-gray-600 ml-4 mr-4">
+               <a href="/login" class="px-4 text-white">Log In</a>
+               <!--<a href="/register" class="mr-10 bg-gradient-to-r from-red-800 to-red-700  text-white rounded shadow-md px-4 py-1">Sign Up</a>
+
+               <div class="flex items-center" x-data="{isOpen: false}">
+                  <hr class="w-px h-6 bg-gray-600 border-gray-600 ml-4 mr-4">
+                  <div class="relative inline-flex mr-10">
+                     <button @click="isOpen = !isOpen" @keydown.escape="isOpen = false"  class="inline-flex justify-center items-center group" aria-haspopup="true" aria-expanded="false" style="outline: none;">
+                        <div class="w-8 h-8 rounded-full" style="background:url();background-size: cover;background-position: center;" alt="User"></div>
+                        <div class="flex items-center truncate">
+                           <span class="flex truncate ml-2 text-sm font-medium group-hover:text-gray-400 text-gray-100">
+                              <svg class="w-3 h-3 ml-1 mt-0.5 fill-current text-gray-400" viewBox="0 0 12 12">
+                                 <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z"></path>
+                              </svg>
+                           </span>
+                        </div>
+                     </button>
+                  </div>
+                  <div x-show.transition.in="isOpen === true" @click.away="isOpen = false" class="shadow-lg float-right w-72 m-10 mt-5 origin-top-right z-10 absolute top-full right-0 rounded overflow-hidden exit-done" style="display: none;background-color: #161616;">
+                     <div>
+                        <div class="h-28 w-full" style="background-color:#29313c;"></div>
+                        <div class="flex justify-center">
+                           <div class="h-24 w-24 md rounded-full relative avatar min-w-max -top-16">
+                              <div class="h-24 w-24 md rounded-full relative border-4 border-black" style="background:url();border-color:#161616;background-size: cover;background-position: center;" alt=""></div>
+                              <h2 class="text-2xl text-gray-100 text-center font-semibold"></h2>
+                           </div>
+                        </div>
+                     </div>
+                     <div>
+                        <ul style="margin-top:-25px;">
+                            <li>
+                              <a href="/dashboard" class="flex items-center px-3 py-3 hover:bg-gray-900">
+                              <i class="fas fa-home text-gray-600 h-4 w-4 text-center"></i>
+                                 <span class="ml-3 text-gray-400">Dashboard</span>
+                              </a>
+                           </li>
+                           <li>
+                              <a href="/profile/" class="flex items-center px-3 py-3 hover:bg-gray-900">
+                                 <i class="fas fa-user text-gray-600 h-4 w-4 text-center"></i>
+                                 <span class="ml-3 text-gray-400">Account</span>
+                              </a>
+                           </li>
+                           <li class="border-b border-gray-700">
+                              <a href="/settings" class="flex items-center px-3 py-3 hover:bg-gray-200">
+                                <i class="fas fa-cog text-gray-600 h-4 w-4 text-center"></i>
+                                 <span class="ml-3 text-gray-400">Settings</span>
+                              </a>
+                           </li>
+                           <li>
+                            <form method="POST" action="">
+                              <button class="w-full flex items-center px-3 py-3 hover:bg-gray-200"  onclick="event.preventDefault(); this.closest('form').submit();">
+                              <i class="fas fa-sign-out-alt text-gray-600 h-4 w-4 text-center"></i>
+                                 <span class="ml-4 text-gray-400">Logout</span>
+                              </button>
+                              </form>
+                           </li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>-->
+            </div>
+         </div>
+      </nav>
+      
+
+    <div class="container pt-20">
+      <div class="header">
+
+        <div class="logo">
+            {% if store.logo %}
+                <a href="/"><img src="{{ store.logo }}" /></a>
+            {% else %}
+                <span>{{ store.name }}</span>
+            {% endif %}
+        </div>
+
+        <div class="buttons">
+          <div class="toolbar">
+            <div class="logout">
+                {% if basket.username %} 
+                    <a href="/checkout/logout" class="btn btn-danger">{{ __("Logout") }}</a> {% else %} <a href="/login" class="btn btn-info">{{ __("Login") }}</a>
+                {% endif %}
+            </div>
+            <div class="currency">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                {{ basket.currency }} <span class="fa fa-caret-down"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                {% for currency in store.currencies %}
+                    {% if currency.code in [store.currency, "AUD", "BRL", "CAD", "DKK", "EUR", "NOK", "NZD", "GBP", "SEK", "USD", "PLN"] %}
+                        <li {% if basket.currency == currency.code %}class="active"{% endif %}>
+                          <a href="?currency={{ currency.code }}">{{ currency.code }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+              </ul>
+            </div>
+            <div class="basket">
+                {% if basket.packages|length > 0 %}
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    {{ _p(":count item for :amount :currency", basket.packages|length, {'count' : basket.packages|length, 'amount' : basket.price|money, 'currency' : basket.currency}) }} <span class="fa fa-caret-down"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        {% for package in basket.packages %}
+                            <li class="item">
+                            <div class="name">{{ package.name[:25] }}</div>
+                            <div class="price">{{ package.price|money }} <small>{{ basket.currency }}</small></div>
+                            <div class="remove"><a href="/checkout/packages/remove/{{ package.id }}"><span class="fa fa-times"</span></a></div>
+                            </li>
+                        {% endfor %}
+                        <li class="checkout">
+                          <div class="total"><b>{{ __("Total") }}:</b> {{ basket.price|money }} <small>{{ basket.currency }}</small></div>
+                          <div class="button"><a href="/checkout/basket" class="btn btn-success">{{ __("Checkout") }}</a></div>
+                        </li>
+                    </ul>
+                {% else %}
+                  <a href="#" class="btn btn-info" disabled="disabled"><i class="icon-shopping-cart icon-white"></i> 
+                  {{ _p(":count item for :amount :currency", basket.packages|length, {'count' : basket.packages|length, 'amount' : basket.price|money, 'currency' : basket.currency}) }}
+                  </a>
+                {% endif %}
+            </div>
+          </div>
+        </div>
+
+      </div> 
+        
+      <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">{{ store.name }}</a>
+          </div>
+
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="{% if page.category == "index" %}active{% endif %}"><a href="/">{{ __("Home") }}</a></li>
+                {% for category in store.categories %}
+                  {% if category.subcategories|length > 0 %}
+                    <li class="dropdown {% if category.active %}active{% endif %}">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ category.name }} <i class="fa fa-caret-down"></i></a>
+                        <ul class="dropdown-menu">
+                          {% for subcategory in category.subcategories %}
+                            <li><a href="/category/{{ subcategory.id }}">{{ subcategory.name }}</a></li>
+                          {% endfor %}
+                        </ul>
+                  {% else %}
+                    <li class="{% if category.active %}active{% endif %}"><a href="/category/{{ category.id }}">{{ category.name }}</a></li>
+                  {% endif %}
+                {% endfor %}
+                {% for page in store.pages %}
+                    <li class="{% if page.active %}active{% endif %}"><a href="/{{ page.slug }}">{{ page.title }}</a></li>
+                {% endfor %}                
+                {% if basket.packages|length > 0 %} 
+                    <li class="visible-xs {% if page.category == "checkout" %}active{% endif %}"><a href="/checkout/basket">{{ __("Checkout") }}</a></li>
+                {% endif %}
+                {% if basket.username %} 
+                    <li class="visible-xs"><a href="/checkout/logout">{{ __("Logout") }}</a></li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+        
+      <div class="notification">
+        {% if page.message.display %}
+            <div class="alert alert-{{ page.message.type}} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{ page.message.text }}
+            </div>
+        {% endif %}  
+      </div>
+
+      {% block content %}{% endblock %}
+
+      <div class="footer">
+          <div class="language">
+              <div class="dropdown dropup">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-globe"></span>{{ __("Language") }}</a>
+                <ul class="dropdown-menu up">
+                  {% for locale, name in store.locales %}
+                      <li><a href="?locale={{ locale }}">{{ name }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+          </div>
+          <div class="branding"> 
+            {% if store.useCheckout %}
+                <a href="/terms/checkout">Terms</a> | <a href="/terms/privacy">Privacy</a> | <a href="/terms/impressum">Impressum</a> |
+            {% endif %}         
+            {{ __("Powered by") }} <a href="http://tebex.io" target="_blank">Tebex.io</a>
+          </div>
+      </div>
+    
+    </div>
+    
+    <div class="modal" id="popup-modal" tabindex="-1" role="dialog"></div>
+    
+    {% if page.category == "checkout" %}
+      <script src="https://js.stripe.com/v2/"></script>
+    {% endif %}
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>  
+    <script src="/templates/209/js/bootstrap.min.js"></script>
+    <script src="/templates/209/js/skin.min.js"></script>
+    <script src="/templates/209/js/site.js"></script>
+     <script>
+            jQuery(function(){
+                var countdowns = $(".countdown-to");
+                countdowns.each(function(){
+                   setInterval(function(ele) {
+                       timeLeft = parseInt(ele.attr("data-countdown"));
+                       if (timeLeft == 0) {
+                           ele.html("Time Expired!");
+                       } else {
+                       timeLeft--;
+                       ele.attr("data-countdown", timeLeft);
+                      var days = Math.floor(timeLeft / (60 * 60 * 24));
+                      var hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60));
+                      var minutes = Math.floor((timeLeft % (60 * 60)) / (60));
+                      var seconds = Math.floor((timeLeft % 60));
+                      ele.html(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
+                       }
+                   }, 1000, jQuery(this));
+                });
+            });
+
+        </script>
+  </body>
+</html>
